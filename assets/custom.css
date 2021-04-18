@@ -1,34 +1,114 @@
 .full {
     background-color: #31313a;
+    color: lightgrey;
     height: auto;
-    padding-left: 40px;
-    margin: 40px;
 }
 
 nav.header {
     background-color: #31313a;
-    padding-left: 40px;
-    margin-left: 40px;
-    margin-right: 40px;
-    margin-top: 40px;
-    text-align: center;
-}
-
-nav.header2 {
-    background-color: #26262d;
-    padding-top: 40px;
 }
 
 nav.footer {
     background-color: #31313a;
-    padding-left: 40px;
-    margin-left: 40px;
-    margin-right: 40px;
-    margin-bottom: 40px;
     font-size: 20px;
 }
 
-nav.footer2 {
-    background-color: #26262d;
-    padding-bottom: 40px;
+
+/* Border Tabel */
+
+
+/* border line */
+
+.resume-items .resume-item .name {
+    font-weight: 500;
+    color: white;
+    font-style: initial;
+    margin: 0 0 15px 0;
 }
+
+.resume-items .resume-item p {
+    margin: 0;
+}
+
+.resume-items .resume-item:before {
+    background: aliceblue;
+}
+
+.resume-items .resume-item .date {
+    color: aliceblue;
+    border-color: aliceblue;
+}
+
+.resume-items .resume-item .date:before {
+    background: aliceblue;
+}
+
+
+/* end border line */
+
+@media (max-width: 840px) {
+    .section.resume .cols .col.col-md:first-child {
+        margin-bottom: 120px;
+    }
+}
+
+.resume-items .resume-item {
+    position: relative;
+    padding: 0 30px 60px 30px;
+}
+
+@media (max-width: 840px) {
+    .resume-items .resume-item {
+        padding-right: 0px;
+    }
+}
+
+.resume-items .resume-item:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background: aliceblue;
+}
+
+.resume-items .resume-item:first-child {
+    padding-top: 0;
+}
+
+.resume-items .resume-item:last-child {
+    padding-bottom: 0;
+    margin-top: -1px;
+}
+
+.resume-items .resume-item:last-child:before {
+    display: none;
+}
+
+.resume-items .resume-item .date {
+    position: relative;
+    top: -10px;
+    margin: 0 0 5px 0;
+    display: inline-block;
+    padding: 0 5px;
+    height: 20px;
+    line-height: 18px;
+    font-weight: 500;
+    font-size: 11px;
+    color: aliceblue;
+    border: 1px solid aliceblue;
+}
+
+.resume-items .resume-item .date:before {
+    content: '';
+    width: 29px;
+    height: 1px;
+    position: absolute;
+    left: -30px;
+    top: 5px;
+    background: aliceblue;
+}
+
+
+/* end Border Tabel */
