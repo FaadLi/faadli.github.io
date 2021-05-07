@@ -7,12 +7,13 @@
     <title>Mz Fadli</title>
 
     <link rel="stylesheet" href="assets/bootstrap-5.0.0-beta3-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="assets/custom.css">
 </head>
 
 
 
-<body class="full container-fluid">
+<body class="full container-fluid" onload="alert()">
 
     <!-- https://www.codeply.com/p/P0KN7DNsEq -->
 
@@ -28,7 +29,7 @@
                         <a class="nav-link active m-3" aria-current="page" href="#">Resume</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link m-3 " href="portofolio.html">portofolio</a>
+                        <a class="nav-link m-3 " href="portfolio.html">portfolio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled m-3" href="#" tabindex="-1" aria-disabled="true">Blog</a>
@@ -46,7 +47,7 @@
     <div class="flex-nowrap">
         <div style="text-align: center; font-family: sans-serif; width: 280px; margin: 240px auto;">
             <h1 class="">Hello, world!</h1>
-            <h3>Iam Fadli .</h3>
+            <h3>I am Fadli .</h3>
             <p>i am trying build website portofolio with github pages .</p>
             <br><br>
 
@@ -68,7 +69,7 @@
                 </p>
 
                 <div class="row">
-                    <div class="col" style="bold;">
+                    <div class="col">
                         Nama : Mokhammad Zainul Fadli <br> Alamat : ABC
                     </div>
                     <div class="col">
@@ -201,8 +202,8 @@
         </nav>
 
 
-
     </div>
+    <button class="third">Title, Text and Icon</button>
 
     <hr>
     <div class="flex-nowrap" style="padding-bottom: 200px;">
@@ -248,7 +249,29 @@
     </div>
 
     <script src="assets/bootstrap-5.0.0-beta3-dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
 
+    <script>
+        // document.querySelector(".third").addEventListener('click', function() {
+        //     // alert warning, error, success, info, dan question
+        //     swal("Informasi", "Website sedang diperbaiki ! ", "info");
+        // });
+
+        function alert() {
+
+            swal({
+                title: "Informasi",
+                text: "Website sedang diperbaiki !",
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                showConfirmButton: false,
+                showCancelButton: false,
+                type: "warning"
+
+            });
+        }
+    </script>
 
 </body>
 
