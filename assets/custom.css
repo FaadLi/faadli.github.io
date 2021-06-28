@@ -15,6 +15,40 @@ nav.footer {
 }
 
 
+/* portofolio */
+
+a {
+    text-decoration: none;
+}
+
+.pimg {
+    position: relative;
+    text-align: center;
+    color: #000;
+    transition: transform .2s;
+    text-align: center;
+}
+
+.pimg a {
+    color: black;
+}
+
+.pimg a:hover {
+    color: darkgreen;
+}
+
+.pimg:hover {
+    transform: scale(1.0);
+    /* font-size: 30px; */
+    opacity: 1.0;
+    zoom: 1, 1;
+    /* filter: blur(1px); */
+}
+
+
+/* end portofolio */
+
+
 /* Border Tabel */
 
 
