@@ -4,13 +4,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Judul</title>
+    <title id="getJudul">Judul</title>
+
+    <link rel="stylesheet" href="assets/bootstrap-5.0.0-beta3-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/custom.css">
 </head>
 
 <body>
 
-    <h1> Judul</h1>
+    <h1 id="getJudul2"> Judul</h1>
+
+    <h2 id="getId"></h2>
+    <div id="posts" class="row container-fluid" style="margin-bottom: 100px;"></div>
+    <pre id="content" style="white-space: pre-wrap;"></pre>
 
 </body>
+
+<!-- GET Param URL -->
+<script>
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    // getId from data by click portfolio
+    var getId = url.searchParams.get("portId");
+    console.log(getId);
+    document.getElementById('getId').innerHTML = getId;
+</script>
+
+<!-- GET DATA spreadsheets -->
+<script type="text/javascript">
+    // Client ID and API key from the Developer Console
+    var CLIENT_ID = '217285195043-mooruon9p2mmfshvtktej12aei8tnofu.apps.googleusercontent.com';
+    var API_KEY = 'AIzaSyAGeYoHcxkt9gOQTq6IZrp9msoPiVJwyeQ';
+
+    // Array of API discovery doc URLs for APIs used by the quickstart
+    var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
+
+    // Authorization scopes required by the API; multiple scopes can be
+    // included, separated by spaces.
+    var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
+
+    /**
+     *  On load, called to load the auth2 library and API client library.
+     */
+    function handleClientLoad() {
+        gapi.load('client', initClient);
+    }
+
+    /**
+     *  Initializes the API client library and sets up sign-in state
+     *  listeners.
+     */
+    function initClient() {
+        gapi.client.init({
+            apiKey: API_KEY,
+            clientId: CLIENT_ID,
+            discoveryDocs: DISCOVERY_DOCS,
+            scope: SCOPES
+        }).then(function() {
+            listMajors();
+        }, function(error) {
+            appendPre(JSON.stringify(error, null, 2));
+        });
+    }
+
+    /**
+     * Append a pre element to the body containing the given message
+     * as its text node. Used to display the results of the API call.
+     *
+     * @param {string} message Text to be placed in pre element.
+     */
+    function appendPre(message) {
+        var pre = document.getElementById('content');
+        var textContent = document.createTextNode(message + '\n');
+        pre.appendChild(textContent);
+    }
+
+    var id = 0;
+
+    function contentById(dataArr) {
+        console.log("data Get");
+        console.log(dataArr[getId]);
+        var dataGet = dataArr[getId];
+
+        console.log(dataGet.judul);
+        document.getElementById("getJudul").innerHTML = dataGet.judul;
+        document.getElementById("getJudul2").innerHTML = dataGet.judul;
+    }
+
+    function content(dataArr) {
+        // console.log(dataArr[0]);
+
+        dataArr.forEach(data => {
+            // console.log(data.tanggal);
+            var coba = "idForm" + id;
+            // console.log(coba);
+            var tanggal = data.tanggal,
+                judul = data.judul,
+                isi = data.konten;
+            image = data.image;
+            type = data.type;
+            var div = document.createElement('div');
+            div.setAttribute('class', 'col-md-5 col-lg-4 mb-4 pimg');
+            div.setAttribute('style', 'padding-bottom: 100px;');
+            div.innerHTML = `
+            <form id="${coba}" action="portfolioDetail.html">
+                <a href="#" onclick="getPortId(${coba})" value="Submit form">
+                    <input type="text" name="portId" value="${id}" hidden>
+                    <img src="${image}" class="card-img-top" alt="...">
+                    <p class="card-text"><small class="text-muted">${type}</small></p>
+                    <h5 class="card-title">${judul}</h5>
+                </a>
+            </form>
+                `;
+            document.getElementById('posts').appendChild(div);
+            id++;
+        });
+
+    }
+
+    function getPortId(coba) {
+        // console.log(coba.id);
+        document.getElementById(coba.id).submit();
+    }
+
+
+
+    //  https://docs.google.com/spreadsheets/d/1R25qid1fLEcFVlWoiODVrCrMr_MOx4Pz8ecN5W67FNk/edit?usp=sharing
+    function listMajors() {
+        gapi.client.sheets.spreadsheets.values.get({
+            spreadsheetId: '1R25qid1fLEcFVlWoiODVrCrMr_MOx4Pz8ecN5W67FNk',
+            range: 'Portfolio',
+        }).then(function(response) {
+                var range = response.result;
+                console.log(range);
+
+                const dataku = range.values;
+                let header = [];
+                let datanasabah = [];
+                for (let row = 0; row < dataku.length; row++) {
+
+                    // 
+                    if (row == 0) {
+                        header = dataku[row];
+                    } else {
+                        //cek tanggal DULU
+                        const now = new Date();
+                        var str = dataku[row][0].substring(0, 10);
+                        var dtarr = str.split("/");
+                        var datee = new Date(dtarr[2].trim() + "-" + dtarr[1].trim() + "-" + dtarr[0].trim());
+                        // Hitung selisih Hari
+                        const diffTime = Math.abs(datee - now);
+                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                        // if (diffDays == 2) {
+                        //bukan baris pertama
+                        var datnas = {};
+                        for (let col = 0; col < dataku[0].length; col++) {
+                            if (col == 0) {
+                                datnas[header[col]] = datee.toLocaleDateString('en-CA');
+                            } else {
+                                // console.log(col+" : "+header[col].replace(/ /gi, ""));
+                                datnas[header[col].replace(/ /gi, "")] = dataku[row][col];
+                            }
+                        }
+                        datanasabah.push(datnas);
+                        // }
+                    }
+                }
+                contentById(datanasabah);
+                content(datanasabah);
+
+
+            },
+            function(response) {
+                appendPre('Error: ' + response.result.error.message);
+            });
+    }
+</script>
+
+<script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script>
+
+
+
+<script src="assets/bootstrap-5.0.0-beta3-dist/js/bootstrap.min.js"></script>
+
+
 
 </html>

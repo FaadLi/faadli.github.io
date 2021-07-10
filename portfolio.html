@@ -60,7 +60,7 @@
 
         <hr>
 
-        <div class="row container-fluid" style="margin-bottom: 100px;">
+        <div class="row container-fluid">
 
             <div class="row" style="padding-bottom: 100px;">
 
@@ -71,16 +71,6 @@
                 <a class="col-12 col-md-1 col-sm-12 mb-1" href="#">Desktop</a>
                 <a class="col" href="#"></a>
             </div>
-
-
-            <!-- <div id="detail" class="col-sm-7 col-md-5 col-lg-4 mb-4 pimg ">
-                <a class="" href="#">
-
-                    <img src="image/portofolio/stroomnet.png" class="rounded " alt="Cinque Terre" width="304" height="236">
-                    <span class="txtimg"> project 1</span>
-                </a>
-            </div> -->
-
 
         </div>
         <div id="posts" class="row container-fluid" style="margin-bottom: 100px;"></div>
@@ -140,12 +130,6 @@
 
     </div>
 
-    <div id="port2" style="display: none;">
-
-        <a id="backPort" href="#">back</a>
-        <h1>Detail Portfolio </h1>
-    </div>
-
 
 
     <script type="text/javascript">
@@ -196,13 +180,19 @@
             pre.appendChild(textContent);
         }
 
+        var id = 0;
+
         function content(dataArr) {
             console.log("data Masuk");
             console.log(dataArr);
 
-            dataArr.forEach(data => {
-                console.log(data.tanggal);
+            // console.log(dataArr[0]);
 
+            dataArr.forEach(data => {
+                // console.log(data.tanggal);
+
+                var coba = "idForm" + id;
+                console.log(coba);
                 var tanggal = data.tanggal,
                     judul = data.judul,
                     isi = data.konten;
@@ -221,18 +211,30 @@
                 //     </a>
                 //     `;
                 div.innerHTML = `
-                    <a href="#">
+                <form id="${coba}" action="portfolioDetail.html">
+                    <a href="#" onclick="getPortId(${coba})" value="Submit form">
+                        <input type="text" name="portId" value="${id}" hidden>
                         <img src="${image}" class="card-img-top" alt="...">
                         <p class="card-text"><small class="text-muted">${type}</small></p>
                         <h5 class="card-title">${judul}</h5>
                     </a>
+                </form>
                     `;
 
 
 
                 document.getElementById('posts').appendChild(div);
+                id++;
             });
+
         }
+
+        function getPortId(coba) {
+            // console.log(coba.id);
+            document.getElementById(coba.id).submit();
+        }
+
+
 
         //  https://docs.google.com/spreadsheets/d/1R25qid1fLEcFVlWoiODVrCrMr_MOx4Pz8ecN5W67FNk/edit?usp=sharing
         function listMajors() {
@@ -242,18 +244,6 @@
             }).then(function(response) {
                     var range = response.result;
                     console.log(range);
-                    // if (range.values.length > 0) {
-                    //     for (i = 0; i < range.values.length; i++) {
-                    //         var row = range.values[i];
-                    //         console.log(row);
-                    //         // Print columns A and E, which correspond to indices 0 and 4.
-                    //         appendPre(row[0] + ', ' + row[2]);
-                    //         appendPreJudul(row[1] + row[1] + row[1] + row[1] + row[1]);
-                    //     }
-                    // } else {
-                    //     appendPre('No data found.');
-                    // }
-
 
                     const dataku = range.values;
                     let header = [];
@@ -291,9 +281,6 @@
                             // }
                         }
                     }
-
-                    console.log("Datanasabah");
-                    // console.log(datanasabah);
                     content(datanasabah);
 
 
@@ -311,22 +298,6 @@
 
     <script src="assets/bootstrap-5.0.0-beta3-dist/js/bootstrap.min.js"></script>
 
-    <script type="text/javascript">
-        // pindah ke detail portfolio
-        document.getElementById("detail").addEventListener("click", detail);
-        document.getElementById("backPort").addEventListener("click", backPort);
-
-        // fungsi jika klik id detail
-        function detail() {
-            document.getElementById("port1").style.display = "none";
-            document.getElementById("port2").style.display = "block";
-        }
-        //  fungsi jika klik id backPort
-        function backPort() {
-            document.getElementById("port1").style.display = "block";
-            document.getElementById("port2").style.display = "none";
-        }
-    </script>
 
 </body>
 
