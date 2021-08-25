@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mz Fadli | Portofolio</title>
+    <title id="getTitle">Mz Fadli | Portofolio</title>
 
     <link rel="stylesheet" href="assets/bootstrap-5.0.0-beta3-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/custom.css">
@@ -18,7 +18,10 @@
 
             <p id="getDesk">Deskripsi Aplikasi</p>
             <h3 id="getGal">Galeri Aplikasi</h3>
-            <div id="getGalAll" class="row container-fluid" style="margin-bottom: 100px;"></div>
+            <div id="getGalAll" class="row container-fluid"></div>
+            <div id="getVid" class="row wistia_responsive_padding" style="padding: 50% 0 0 0; position:relative;"> Video </div>
+            <!-- <div id="getVid" class=" wistia_responsive_padding" style="padding:54.17% 0 0 0;position:relative;"> Video </div> -->
+
 
             <div id="posts" class="row container-fluid" style="margin-bottom: 100px;"></div>
             <pre id="content" style="white-space: pre-wrap;"></pre>
@@ -116,43 +119,48 @@
 
 
         // show Image Portfolio
-        const myImg = dataGet.imageall.split(",");
-        console.log(myImg);
+        console.log(dataGet.imageall);
+        if (dataGet.imageall != null) {
 
-        for (i = 0; i < myImg.length; i++) {
+            const myImg = dataGet.imageall.split(",");
 
-            var div = document.createElement('div');
-            div.setAttribute('class', 'col-md-5 col-lg-4 mb-4 pimg');
-            div.setAttribute('style', 'padding-bottom: 100px;');
-            div.innerHTML = `
-            
-            <a href="#" >
-                <input type="text" name="portId"  hidden>
-                <img id="myImg${i}" src="${myImg[i]}" class="img-thumbnail" alt="...">
-                <p class="card-text"><small class="text-muted">${dataGet.judul}</small></p>
+            console.log(myImg);
+
+            for (i = 0; i < myImg.length; i++) {
+
+                var div = document.createElement('div');
+                div.setAttribute('class', 'col-md-5 col-lg-4 mb-4 pimg');
+                // div.setAttribute('style', 'padding-bottom: 100px;');
+                div.innerHTML = `
                 
+                <a href="#" >
+                    <input type="text" name="portId"  hidden>
+                    <img id="myImg${i}" src="${myImg[i]}" class="img-thumbnail" alt="...">
+                    <p class="card-text"><small class="text-muted">${dataGet.judul}</small></p>
+                    
                 </a>
                 `;
 
-            document.getElementById('getGalAll').appendChild(div);
-            // Modal
+                document.getElementById('getGalAll').appendChild(div);
+                // Modal
 
-            var modal = document.getElementById("myModal");
-            var span = document.getElementsByClassName("close")[0];
+                var modal = document.getElementById("myModal");
+                var span = document.getElementsByClassName("close")[0];
 
-            var img = document.getElementById("myImg" + i);
-            var modalImg = document.getElementById("img01");
-            var captionText = document.getElementById("caption");
-            img.onclick = function() {
-                modal.style.display = "block";
-                modalImg.src = this.src;
-                captionText.innerHTML = this.alt;
+                var img = document.getElementById("myImg" + i);
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+                img.onclick = function() {
+                    modal.style.display = "block";
+                    modalImg.src = this.src;
+                    captionText.innerHTML = this.alt;
+                }
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+                // end Modal
             }
-            span.onclick = function() {
-                modal.style.display = "none";
-            }
-
-            // end Modal
         }
         // end show Image Portfolio
 
@@ -176,10 +184,35 @@
 
         }
         // end show Teknologi Portfolio
+        // show video portfolio
+        const video = dataGet.video;
+        if (video != null) {
+
+            var div = document.createElement('div');
+            div.setAttribute('class', 'wistia_responsive_wrapper');
+            div.setAttribute('style', 'height:100%;left:0;position:absolute;top:0;width:100%');
+
+            div.innerHTML = `
+                <span class="wistia_embed wistia_async_${video} popover=true popoverAnimateThumbnail=true videoFoam=true" style="display:inline-block;height:100%;position:relative;width:100%">&nbsp;</span>
+            `;
+            document.getElementById("getVid").appendChild(div);
+
+            console.log("1");
+            var head = document.getElementsByTagName('head')[0];
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = 'https://fast.wistia.com/embed/medias/' + video + '.jsonp';
+            head.appendChild(script);
+
+        }
+        // end video portfolio
 
 
         document.getElementById("getJudul").innerHTML = dataGet.judul;
+        document.getElementById("getTitle").innerHTML = dataGet.judul + " | Portofolio | Mz Fadli ";
         document.getElementById("getDesk").innerHTML = dataGet.konten;
+
+
 
 
     }
@@ -278,6 +311,9 @@
 <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()">
 </script>
 
+<!-- get video from mzfadlii.wistia.com -->
+<script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+<!-- <script src="https://fast.wistia.com/embed/medias/9y3n1e4gmi.jsonp" async></script> -->
 
 
 <script src="assets/bootstrap-5.0.0-beta3-dist/js/bootstrap.min.js"></script>
